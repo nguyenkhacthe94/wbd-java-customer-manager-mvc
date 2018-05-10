@@ -98,23 +98,23 @@ public class CustomerServlet extends HttpServlet {
     }
 
     private void showDeleteForm(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Customer customer = this.customerService.findById(id);
-        RequestDispatcher dispatcher;
-        if(customer == null){
-            dispatcher = request.getRequestDispatcher("error-404.jsp");
-        } else {
-            request.setAttribute("customer", customer);
-            dispatcher = request.getRequestDispatcher("customer/delete.jsp");
+            int id = Integer.parseInt(request.getParameter("id"));
+            Customer customer = this.customerService.findById(id);
+            RequestDispatcher dispatcher;
+            if(customer == null){
+                dispatcher = request.getRequestDispatcher("error-404.jsp");
+            } else {
+                request.setAttribute("customer", customer);
+                dispatcher = request.getRequestDispatcher("customer/delete.jsp");
+            }
+            try {
+                dispatcher.forward(request, response);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        try {
-            dispatcher.forward(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void updateCustomer(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
